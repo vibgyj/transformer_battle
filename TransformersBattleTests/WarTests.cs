@@ -35,11 +35,11 @@ namespace TransformersBattleTests
 
             var mockBattle = new Mock<IBattle>();
             var war = new War(mockBattle.Object);
-            mockBattle.Setup(b => b.SimulateBattle(transformerD, transformerA)).Returns(transformerA.Id);
+            mockBattle.Setup(b => b.SimulateBattle(transformerD, transformerA)).Returns(transformerA);
 
             var victors = war.SimulateWar(transformers);
 
-            Assert.Contains(transformerA.Id, victors);
+            Assert.Contains(transformerA, victors);
         }
 
         [Fact]
@@ -52,12 +52,12 @@ namespace TransformersBattleTests
 
             var mockBattle = new Mock<IBattle>();
             var war = new War(mockBattle.Object);
-            mockBattle.Setup(b => b.SimulateBattle(transformerA, transformerD)).Returns(transformerA.Id);
+            mockBattle.Setup(b => b.SimulateBattle(transformerA, transformerD)).Returns(transformerA);
 
             var victors = war.SimulateWar(transformers);
 
-            Assert.Contains(transformerA.Id, victors);
-            Assert.Contains(transformerA2.Id, victors);
+            Assert.Contains(transformerA, victors);
+            Assert.Contains(transformerA2, victors);
         }
 
         [Fact]
@@ -70,12 +70,12 @@ namespace TransformersBattleTests
 
             var mockBattle = new Mock<IBattle>();
             var war = new War(mockBattle.Object);
-            mockBattle.Setup(b => b.SimulateBattle(transformerA2, transformerD)).Returns(transformerD.Id);
+            mockBattle.Setup(b => b.SimulateBattle(transformerA2, transformerD)).Returns(transformerD);
 
             var victors = war.SimulateWar(transformers);
 
-            Assert.Contains(transformerD.Id, victors);
-            Assert.Contains(transformerA.Id, victors);
+            Assert.Contains(transformerD, victors);
+            Assert.Contains(transformerA, victors);
         }
     }
 }

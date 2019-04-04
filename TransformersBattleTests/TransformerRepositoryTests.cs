@@ -4,7 +4,7 @@ using TransformerBattle.DataLayer;
 using TransformerBattle.Repositories;
 using Xunit;
 
-namespace TransformerBattleTests
+namespace TransformersBattleTests
 {
     public class TransformerRepositoryTests
     {

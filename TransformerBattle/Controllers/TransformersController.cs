@@ -66,7 +66,7 @@ namespace TransformerBattle.Controllers
 
         [HttpGet("simulatewar")]
         // GET: api/transformers/simulatewar
-        public IEnumerable<Guid> SimulateWar()
+        public IEnumerable<Transformer> SimulateWar()
         {
             var transformers = transformerRepository.GetAll();
             return war.SimulateWar(transformers);

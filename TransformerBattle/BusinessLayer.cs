@@ -8,12 +8,12 @@ namespace TransformerBattle.BusinessLayer
 {
     public interface IWar
     {
-        List<Guid> SimulateWar(List<Transformer> transformers);
+        List<Transformer> SimulateWar(List<Transformer> transformers);
     }
 
     public interface IBattle
     {
-        Guid SimulateBattle(Transformer transformerA, Transformer transformerB);
+        Transformer SimulateBattle(Transformer transformerA, Transformer transformerB);
     }
 
     public class War : IWar
@@ -24,15 +24,15 @@ namespace TransformerBattle.BusinessLayer
             this.battle = battle;
         }
 
-        public List<Guid> SimulateWar(List<Transformer> transformers)
+        public List<Transformer> SimulateWar(List<Transformer> transformers)
         {
             if (transformers.Any(t => t.Name.Equals("Optimus")) && transformers.Any(t => t.Name.Equals("Predaking")))
-                return new List<Guid>();
+                return new List<Transformer>();
 
             var autobots = transformers.Where(t => t.Allegiance.Equals(Group.Autobot)).OrderByDescending(t => t.Rank);
             var decepticons = transformers.Where(t => t.Allegiance.Equals(Group.Decepticon)).OrderByDescending(t => t.Rank);
 
-            var result = new List<Guid>();
+            var result = new List<Transformer>();
 
             IEnumerable<Transformer> largerGroup;
             IEnumerable<Transformer> smallerGroup;
@@ -51,7 +51,7 @@ namespace TransformerBattle.BusinessLayer
             {
                 if (smallerGroup.Count() <= i)
                 {
-                    result.Add(largerGroup.ElementAt(i).Id);
+                    result.Add(largerGroup.ElementAt(i));
                 }
                 else
                 {
@@ -59,18 +59,6 @@ namespace TransformerBattle.BusinessLayer
                     result.Add(victor);
                 }                    
             }
-            //var autobotsCount = autobots.Count();
-            //var decepticonsCount = decepticons.Count();
-            //var minLenth = autobotsCount < decepticonsCount ? autobotsCount : decepticonsCount;
-
-            
-            //for(int i = 0; i < minLenth; i++)
-            //{
-            //    var victor = battle.SimulateBattle(autobots[i], decepticons[i]);
-            //    result.Add(victor);
-            //}
-
-            //if()
 
             return result;
         }
@@ -78,9 +66,26 @@ namespace TransformerBattle.BusinessLayer
 
     public class Battle : IBattle
     {
-        public Guid SimulateBattle(Transformer transformerA, Transformer transformerB)
+        public Transformer SimulateBattle(Transformer transformerA, Transformer transformerB)
         {
-            throw new NotImplementedException();
+            if (transformerA.Name.Equals("Optimus") || transformerA.Name.Equals("Predaking"))
+                return transformerA;
+            if (transformerB.Name.Equals("Optimus") || transformerB.Name.Equals("Predaking"))
+                return transformerB;
+
+            if (transformerA.Strength - transformerB.Strength > 2 && transformerB.Courage < 5)
+                return transformerA;
+            if (transformerB.Strength - transformerA.Strength > 2 && transformerA.Courage < 5)
+                return transformerB;
+
+            if (transformerA.Skill - transformerB.Skill > 4) return transformerA;
+            if (transformerB.Skill - transformerA.Skill > 4) return transformerB;
+
+            if (transformerA.GetOverAll() > transformerB.GetOverAll()) return transformerA;
+            if (transformerB.GetOverAll() > transformerA.GetOverAll()) return transformerB;
+
+            if (transformerA.Allegiance == Group.Autobot) return transformerA;
+            return transformerB;
         }
     }
 }

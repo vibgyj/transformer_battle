@@ -29,6 +29,11 @@ namespace TransformerBattle.DataLayer
         public int Courage { get; set; }
         public int Firepower { get; set; }
         public int Skill { get; set; }
+
+        public int GetOverAll()
+        {
+            return Strength + Intelligence + Speed + Endurance + Rank + Courage + Firepower + Skill;
+        }
     }
 
     public class TransformerScore
