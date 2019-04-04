@@ -77,5 +77,33 @@ namespace TransformersBattleTests
             Assert.Contains(transformerD, victors);
             Assert.Contains(transformerA, victors);
         }
+
+        [Fact]
+        public void SimulateWar_UnEvenCount_OnlyAutobot()
+        {
+            var transformerA = new Transformer { Id = Guid.NewGuid(), Name = "A1", Allegiance = Group.Autobot };
+            var transformers = new List<Transformer> { transformerA };
+
+            var mockBattle = new Mock<IBattle>();
+            var war = new War(mockBattle.Object);
+
+            var victors = war.SimulateWar(transformers);
+
+            Assert.Contains(transformerA, victors);
+        }
+
+        [Fact]
+        public void SimulateWar_UnEvenCount_OnlyDecepticon()
+        {
+            var transformerD = new Transformer { Id = Guid.NewGuid(), Name = "D1", Allegiance = Group.Decepticon };
+            var transformers = new List<Transformer> { transformerD };
+
+            var mockBattle = new Mock<IBattle>();
+            var war = new War(mockBattle.Object);
+
+            var victors = war.SimulateWar(transformers);
+
+            Assert.Contains(transformerD, victors);
+        }
     }
 }

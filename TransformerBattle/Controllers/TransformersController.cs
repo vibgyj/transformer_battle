@@ -16,9 +16,10 @@ namespace TransformerBattle.Controllers
         private readonly TransformerContext context;
         private readonly IWar war;
 
-        public TransformersController(ITransformerRepository transformerRepository, TransformerContext context)
+        public TransformersController(ITransformerRepository transformerRepository, IWar war, TransformerContext context)
         {
             this.transformerRepository = transformerRepository;
+            this.war = war;
             this.context = context;
         }
 
